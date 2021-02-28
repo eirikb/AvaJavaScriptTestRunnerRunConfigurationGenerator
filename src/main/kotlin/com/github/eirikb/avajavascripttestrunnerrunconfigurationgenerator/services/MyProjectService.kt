@@ -1,7 +1,7 @@
-package org.jetbrains.plugins.template.services
+package com.github.eirikb.avajavascripttestrunnerrunconfigurationgenerator.services
 
+import com.github.eirikb.avajavascripttestrunnerrunconfigurationgenerator.MyBundle
 import com.intellij.openapi.project.Project
-import org.jetbrains.plugins.template.MyBundle
 
 class MyProjectService(project: Project) {
 
