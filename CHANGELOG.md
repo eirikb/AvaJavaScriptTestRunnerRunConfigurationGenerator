@@ -1,6 +1,6 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# AvaJavaScriptTestRunnerRunConfigurationGenerator Changelog
+# AVA Test Run Configuration Generator Changelog
 
 ## [1.3]
 
