@@ -2,6 +2,10 @@
 
 # AvaJavaScriptTestRunnerRunConfigurationGenerator Changelog
 
-## [Unreleased]
+## [1.3]
+
 ### Added
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+
+- Old Java project imported and converted to Kotlin
+- Initial scaffold created
+  from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
