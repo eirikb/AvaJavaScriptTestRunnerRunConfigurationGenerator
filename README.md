@@ -17,6 +17,7 @@
   This should generate and start a new run configuration. <br/>
   If caret is outside of a test it should generate and start a run configuration for the file. <br/>
 </p>
+<a href="https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator">Plugin source code</a>
 <!-- Plugin description end -->
 
 ## Installation
