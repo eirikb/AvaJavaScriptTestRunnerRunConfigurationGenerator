@@ -20,6 +20,8 @@ import com.intellij.psi.PsiElement
 import com.jetbrains.nodejs.run.NodeJsRunConfiguration
 import java.nio.file.Paths
 
+fun JSCallExpression.isTest() = this.methodExpression?.text.equals("test")
+
 class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
     private fun writeError(text: String) {
         val notification =
@@ -33,19 +35,18 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
     }
 
     private fun getTestName(element: PsiElement?): String? {
-        if (element == null) {
+        if (element == null || element !is JSCallExpression) {
             return null
         }
-        if (element is JSCallExpression) {
-            val jsCallExpression: JSCallExpression = element
-            val method: JSExpression? = jsCallExpression.methodExpression
-            if (method?.text.equals("test")) {
-                val arguments: Array<JSExpression> = jsCallExpression.arguments
-                if (arguments.isNotEmpty()) {
-                    if (arguments[0] is JSLiteralExpression) {
-                        val expression: JSLiteralExpression = arguments[0] as JSLiteralExpression
-                        return expression.stringValue
-                    }
+
+        val jsCallExpression: JSCallExpression = element
+
+        if (jsCallExpression.isTest()) {
+            val arguments: Array<JSExpression> = jsCallExpression.arguments
+            if (arguments.isNotEmpty()) {
+                if (arguments[0] is JSLiteralExpression) {
+                    val expression: JSLiteralExpression = arguments[0] as JSLiteralExpression
+                    return expression.stringValue
                 }
                 return null
             }
