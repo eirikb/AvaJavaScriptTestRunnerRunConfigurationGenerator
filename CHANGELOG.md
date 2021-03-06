@@ -3,6 +3,9 @@
 # AVA Test Run Configuration Generator Changelog
 
 ## [Unreleased]
+version
+- Change deprecated method call
+
 ## [1.3.1]
 ## [0.0.1]
 
