@@ -96,7 +96,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
         }
         val runManager = RunManager.getInstance(project)
         val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration(node, factory)
-        runManager.addConfiguration(configuration, false)
+        runManager.addConfiguration(configuration)
         runManager.selectedConfiguration = configuration
         ExecutionUtil.runConfiguration(configuration, DefaultRunExecutor.getRunExecutorInstance())
     }
