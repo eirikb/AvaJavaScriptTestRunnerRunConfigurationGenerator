@@ -4,25 +4,6 @@
   <version>1.3</version>
   <vendor email="eirikb@eirikb.no">Eirik Brandtzæg</vendor>
 
-  <description><![CDATA[
-<h1>Generates a run configuration for AVA JavaScript test runner</h1>
-<p>
-  This is a workaround while we wait for proper AVA support, see
-  <a href="https://youtrack.jetbrains.com/issue/WEB-21788">https://youtrack.jetbrains.com/issue/WEB-21788</a>.<br/>
-</p>
-<h3>Usage</h3>
-<p>
-  Place caret inside a test and press <b>ctrl</b> + <b>alt</b> + <b>shift</b> + <b>a</b>. <br/>
-  This should generate and start a new run configuration. <br/>
-  If caret is outside of a test it should generate and start a run configuration for the file. <br/>
-</p>
-<h3>P.S.</h3>
-<p>
-  Any feedback and request can be sent to eirikb@eirikb.no.<br/>
-  I haven't made a plugin before, I have no idea what I'm doing.
-</p>
-    ]]></description>
-
   <idea-version since-build="173.0"/>
   <depends>com.intellij.modules.lang</depends>
   <depends>JavaScript</depends>
