@@ -6,6 +6,7 @@ import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.runners.ExecutionUtil
 import com.intellij.lang.javascript.psi.JSCallExpression
+import com.intellij.lang.javascript.psi.JSElement
 import com.intellij.lang.javascript.psi.JSExpression
 import com.intellij.lang.javascript.psi.JSLiteralExpression
 import com.intellij.notification.Notification
@@ -35,12 +36,15 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
     }
 
     private fun getTestName(element: PsiElement?): String? {
-        if (element == null || element !is JSCallExpression) {
+        if (element == null ||  element.parent== null) {
             return null
         }
 
-        val jsCallExpression: JSCallExpression = element
+        if( element !is JSCallExpression ){
+            return getTestName(element.parent)
+        }
 
+        val jsCallExpression: JSCallExpression = element
         if (jsCallExpression.isTest()) {
             val arguments: Array<JSExpression> = jsCallExpression.arguments
             if (arguments.isNotEmpty()) {
@@ -74,6 +78,8 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
         }
         val filePath = currentFile.path
         val fileName = Paths.get(filePath).fileName.toString()
+        val basePath = project.basePath
+        val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length +1)
         val node: NodeJsRunConfiguration? =
             NodeJsRunConfiguration.getDefaultRunConfiguration(project)?.clone() as NodeJsRunConfiguration?
         if (node == null) {
@@ -85,14 +91,14 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             writeError("Factory not found")
             return
         }
-        node.workingDirectory = project.basePath
+        node.workingDirectory = basePath
         node.inputPath = "node_modules/ava/cli.js"
         if (testName != null) {
             node.name = "ava $fileName $testName"
-            node.applicationParameters = "-m \"$testName\" -v $fileName"
+            node.applicationParameters = "-m \"$testName\" -v $relPath"
         } else {
             node.name = "ava $fileName"
-            node.applicationParameters = "-v $fileName"
+            node.applicationParameters = "-v $relPath"
         }
         val runManager = RunManager.getInstance(project)
         val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration(node, factory)
