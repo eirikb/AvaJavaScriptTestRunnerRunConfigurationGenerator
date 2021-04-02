@@ -35,11 +35,11 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
     }
 
     private fun getTestName(element: PsiElement?): String? {
-        if (element == null ||  element.parent== null) {
+        if (element == null || element.parent == null) {
             return null
         }
 
-        if( element !is JSCallExpression ){
+        if (element !is JSCallExpression) {
             return getTestName(element.parent)
         }
 
@@ -78,7 +78,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
         val filePath = currentFile.path
         val fileName = Paths.get(filePath).fileName.toString()
         val basePath = project.basePath
-        val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length +1)
+        val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length + 1)
         val node: NodeJsRunConfiguration? =
             NodeJsRunConfiguration.getDefaultRunConfiguration(project)?.clone() as NodeJsRunConfiguration?
         if (node == null) {
