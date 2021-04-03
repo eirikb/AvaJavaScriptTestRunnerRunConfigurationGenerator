@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 ## [1.3.3]
+## [1.3.3]
 ### Changed
 - [Fix issue with using file name #4](https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/4) by  Ben Donnelly (Umaaz)
 - Dependabot
