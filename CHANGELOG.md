@@ -3,6 +3,10 @@
 # AVA Test Run Configuration Generator Changelog
 
 ## [Unreleased]
+## [1.3.3]
+### Changed
+- [Fix issue with using file name #4](https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/4) by  Ben Donnelly (Umaaz)
+- Dependabot
 ## [1.3.2]
 version
 - Change deprecated method call
