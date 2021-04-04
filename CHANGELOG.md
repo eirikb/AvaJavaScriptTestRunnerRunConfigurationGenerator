@@ -21,16 +21,21 @@
 
 ## [1.3.2]
 
-version
-
 - Change deprecated method call
-
-## [1.3.1]
-
-## [0.0.1]
-
-### Added
-
 - Old Java project imported and converted to Kotlin
 - Initial scaffold created
   from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+
+## [1.2]
+
+- Better calculation of test method name
+
+## [1.1]
+
+- Insert relative path to test file, in case test files are inside subfolders
+
+## [1.0]
+
+- Initial version
+
+### Added
