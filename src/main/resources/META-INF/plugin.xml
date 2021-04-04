@@ -8,7 +8,9 @@
   <depends>JavaScript</depends>
   <depends>NodeJS</depends>
 
-  <extensions defaultExtensionNs="com.intellij"/>
+  <extensions defaultExtensionNs="com.intellij">
+    <runLineMarkerContributor language="JavaScript" implementationClass="no.eirikb.avatest.markers.AvaRunContributor"/>
+  </extensions>
 
   <actions>
     <action id="AvaJavaScriptTestRunnerRunConfigurationGenerator"
