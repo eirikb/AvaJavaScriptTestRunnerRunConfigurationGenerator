@@ -26,15 +26,15 @@
 - Initial scaffold created
   from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
 
-## [1.2]
+## [1.2.0]
 
 - Better calculation of test method name
 
-## [1.1]
+## [1.1.0]
 
 - Insert relative path to test file, in case test files are inside subfolders
 
-## [1.0]
+## [1.0.0]
 
 - Initial version
 
