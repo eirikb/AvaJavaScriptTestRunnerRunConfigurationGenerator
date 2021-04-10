@@ -3,7 +3,12 @@
 # AVA Test Run Configuration Generator Changelog
 
 ## [Unreleased]
-## [1.3.4]
+
+## [1.3.5]
+
+### Change
+
+- Target 2021.1+
 
 ## [1.3.4]
 
