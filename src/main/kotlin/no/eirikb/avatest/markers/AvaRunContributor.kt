@@ -11,6 +11,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.psi.PsiElement
 import no.eirikb.avatest.actions.AvaJavaScriptTestRunnerRunConfigurationGenerator
 import no.eirikb.avatest.actions.isTest
+import no.eirikb.avatest.utils.getTestNameByClearUnnecessaryString
 import javax.swing.Icon
 
 class AvaRunContributor : RunLineMarkerContributor() {
@@ -25,9 +26,10 @@ class AvaRunContributor : RunLineMarkerContributor() {
             if (arguments.isNotEmpty()) {
                 if (arguments[0] is JSLiteralExpression) {
                     val expression: JSLiteralExpression = arguments[0] as JSLiteralExpression
+
                     return Info(
                         TestState.Run,
-                        getActions(element.textOffset, "${expression.stringValue}")
+                        getActions(element.textOffset, "${getTestNameByClearUnnecessaryString(expression)}")
                     ) { "Run Test" }
                 }
                 return null

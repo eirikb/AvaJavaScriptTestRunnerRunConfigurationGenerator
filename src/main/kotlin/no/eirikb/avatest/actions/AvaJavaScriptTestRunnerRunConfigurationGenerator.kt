@@ -20,6 +20,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.wm.ToolWindowId
 import com.intellij.psi.PsiElement
 import com.jetbrains.nodejs.run.NodeJsRunConfiguration
+import no.eirikb.avatest.utils.getTestNameByClearUnnecessaryString
 import java.nio.file.Paths
 
 fun JSCallExpression.isTest(): Boolean {
@@ -116,7 +117,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
                 if (arguments.isNotEmpty()) {
                     if (arguments[0] is JSLiteralExpression) {
                         val expression: JSLiteralExpression = arguments[0] as JSLiteralExpression
-                        return expression.stringValue
+                        return getTestNameByClearUnnecessaryString(expression)
                     }
                     return null
                 }
