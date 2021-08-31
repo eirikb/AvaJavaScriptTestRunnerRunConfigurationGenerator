@@ -22,7 +22,15 @@ import com.intellij.psi.PsiElement
 import com.jetbrains.nodejs.run.NodeJsRunConfiguration
 import java.nio.file.Paths
 
-fun JSCallExpression.isTest() = this.methodExpression?.text.equals("test")
+fun JSCallExpression.isTest(): Boolean {
+    var text = this.methodExpression?.text
+
+    if (text != null) {
+        return text == "test" || text.startsWith("test.")
+    }
+
+    return false;
+}
 
 class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
     companion object {
