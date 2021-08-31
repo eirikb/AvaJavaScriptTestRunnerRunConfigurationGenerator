@@ -24,13 +24,13 @@ import no.eirikb.avatest.utils.getTestNameByClearUnnecessaryString
 import java.nio.file.Paths
 
 fun JSCallExpression.isTest(): Boolean {
-    var text = this.methodExpression?.text
+    val text = this.methodExpression?.text
 
     if (text != null) {
         return text == "test" || text.startsWith("test.")
     }
 
-    return false;
+    return false
 }
 
 class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
