@@ -3,6 +3,11 @@
 
 name: Release
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: 'Version'
   release:
     types: [prereleased, released]
 
@@ -25,6 +30,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.release.tag_name }}
+
+      - name: Change Version
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: ./scripts/change-version-by-input.sh
 
       # Publish the plugin to the Marketplace
       - name: Publish Plugin
@@ -51,6 +61,11 @@ jobs:
         with:
           ref: ${{ github.event.release.tag_name }}
 
+      - name: Change Version
+        env:
+          VERSION: ${{ github.event.inputs.version }}
+        run: ./scripts/change-version-by-input.sh
+
       # Update Unreleased section with the current version
       - name: Patch Changelog
         run: ./gradlew patchChangelog
@@ -60,7 +75,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Update changelog" -a
+          git commit -m "Update changelog and version" -a
 
       # Push changes
       - name: Push changes
