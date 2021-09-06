@@ -20,4 +20,11 @@
       <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt A"/>
     </action>
   </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable parentId="tools" instance="no.eirikb.avatest.settings.AppSettingsConfigurable"
+                             id="no.eirikb.avatest.settings.AppSettingsConfigurable"
+                             displayName="AVA Test Runner Run Configuration Generator"/>
+    <applicationService serviceImplementation="no.eirikb.avatest.settings.AppSettingsState"/>
+  </extensions>
 </idea-plugin>

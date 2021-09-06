@@ -20,6 +20,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.wm.ToolWindowId
 import com.intellij.psi.PsiElement
 import com.jetbrains.nodejs.run.NodeJsRunConfiguration
+import no.eirikb.avatest.settings.AppSettingsState
 import no.eirikb.avatest.utils.getTestNameByClearUnnecessaryString
 import java.nio.file.Paths
 
@@ -69,7 +70,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
                 return
             }
             node.workingDirectory = basePath
-            node.inputPath = "node_modules/ava/cli.js"
+            node.inputPath = AppSettingsState.inputPath
             if (testName != null) {
                 node.name = "ava $fileName $testName"
                 node.applicationParameters = "-m \"$testName\" -v $relPath"
