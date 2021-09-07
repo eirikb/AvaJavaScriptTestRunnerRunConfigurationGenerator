@@ -18,7 +18,7 @@ fun getTestNameByClearUnnecessaryString(expression: JSLiteralExpression): String
     val paramSourceCode = expression.text
 
     if (paramSourceCode.isNotEmpty() && paramSourceCode.startsWith("`") && paramSourceCode.endsWith("`")) {
-        val stringTemplateRegex = Regex("\\$\\{.?\\}")
+        val stringTemplateRegex = Regex("\\\$\\{[^}]+\\}")
         return paramSourceCode.replace("`", "").replace(stringTemplateRegex, "*").trim()
     }
 
