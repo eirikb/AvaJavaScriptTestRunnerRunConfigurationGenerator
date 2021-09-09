@@ -8,6 +8,9 @@ import com.intellij.util.ui.FormBuilder
 import javax.swing.ButtonGroup
 import javax.swing.JPanel
 
+const val MARGIN_TOP = 10
+const val MARGIN_BOTTOM = 8
+
 class AppSettingsComponent {
     val panel: JPanel
     val myInputPathText = JBTextField()
@@ -55,8 +58,8 @@ class AppSettingsComponent {
         panel = FormBuilder.createFormBuilder()
             .addComponent(commandModelRadioButton)
             .addLabeledComponent(JBLabel("Enter path to AVA: "), myInputPathText, 1, false)
-            .addSeparator(10)
-            .addVerticalGap(8)
+            .addSeparator(MARGIN_TOP)
+            .addVerticalGap(MARGIN_BOTTOM)
             .addComponent(npmModelRadioButton)
             .addLabeledComponent(JBLabel("npm Scripts: "), npmScriptsInput, 1, false)
             .addComponentFillVertically(JPanel(), 0)

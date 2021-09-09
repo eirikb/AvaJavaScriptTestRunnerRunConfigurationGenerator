@@ -28,7 +28,6 @@ import com.intellij.psi.PsiElement
 import com.jetbrains.nodejs.run.NodeJsRunConfiguration
 import no.eirikb.avatest.settings.AppSettingsState
 import no.eirikb.avatest.utils.getTestNameByClearUnnecessaryString
-import org.jetbrains.annotations.NonNls
 import java.nio.file.Paths
 
 fun JSCallExpression.isTest(): Boolean {
@@ -83,9 +82,9 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length + 1)
 
             val configuration = if (AppSettingsState.selectedCommand) {
-                this.createNodeJsRunConfiguration(project, testName, fileName, relPath)
+                this.createNodeJsRunConfiguration(project, fileName, relPath, testName)
             } else {
-                this.createNPMRunConfiguration(project, currentFile, testName, fileName, relPath)
+                this.createNPMRunConfiguration(project, currentFile, fileName, relPath, testName)
             }
 
             if (configuration == null) {
@@ -135,7 +134,12 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             return getTestName(element.parent)
         }
 
-        private fun createNodeJsRunConfiguration(project: Project, testName: String?, fileName: String, relPath: String): RunnerAndConfigurationSettings? {
+        private fun createNodeJsRunConfiguration(
+            project: Project,
+            fileName: String,
+            relPath: String,
+            testName: String?,
+        ): RunnerAndConfigurationSettings? {
             val node: NodeJsRunConfiguration? =
                 NodeJsRunConfiguration.getDefaultRunConfiguration(project)?.clone() as NodeJsRunConfiguration?
             if (node == null) {
@@ -160,15 +164,30 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             return configuration
         }
 
-        private fun createNPMRunConfiguration(project: Project, currentFile: VirtualFile, testName: String?, fileName: String, relPath: String): RunnerAndConfigurationSettings? {
+        private fun createNPMRunConfiguration(
+            project: Project,
+            currentFile: VirtualFile,
+            fileName: String,
+            relPath: String,
+            testName: String?,
+        ): RunnerAndConfigurationSettings? {
             val npmRunSettingsBuilder = NpmRunSettings.builder()
-            var packageJsonPath: @NonNls String? = PackageJsonUtil.findUpPackageJson(currentFile)?.path ?: return null
+            val packageJsonPath = PackageJsonUtil.findUpPackageJson(currentFile)?.path
 
-            packageJsonPath?.let { npmRunSettingsBuilder.setPackageJsonPath(it) }
+            if (packageJsonPath == null) {
+                return null
+            }
+
+            npmRunSettingsBuilder.setPackageJsonPath(packageJsonPath)
+
             npmRunSettingsBuilder.setArguments(getRunArguments(relPath, testName))
             npmRunSettingsBuilder.setScriptNames(listOf(AppSettingsState.npmScriptsText))
 
-            val npmRunConfiguration = NpmRunConfiguration(project, NpmConfigurationType.getInstance(), getConfigurationName(fileName, testName))
+            val npmRunConfiguration = NpmRunConfiguration(
+                project,
+                NpmConfigurationType.getInstance(),
+                getConfigurationName(fileName, testName)
+            )
             npmRunConfiguration.runSettings = npmRunSettingsBuilder.build()
 
             val runManager = RunManager.getInstance(project)

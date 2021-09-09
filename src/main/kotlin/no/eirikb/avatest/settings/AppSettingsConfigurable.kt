@@ -22,10 +22,12 @@ class AppSettingsConfigurable : Configurable {
         modifiedInputPath = modifiedInputPath or (mySettingsComponent!!.inputPathText != AppSettingsState.inputPath)
 
         var modifiedSelectedModel = mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand
-        modifiedSelectedModel = modifiedSelectedModel or (mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand)
+        modifiedSelectedModel =
+            modifiedSelectedModel or (mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand)
 
         var modifiedNPMScriptsText = mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText
-        modifiedNPMScriptsText = modifiedNPMScriptsText or (mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText)
+        modifiedNPMScriptsText =
+            modifiedNPMScriptsText or (mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText)
 
         return modifiedInputPath || modifiedSelectedModel || modifiedNPMScriptsText
     }
