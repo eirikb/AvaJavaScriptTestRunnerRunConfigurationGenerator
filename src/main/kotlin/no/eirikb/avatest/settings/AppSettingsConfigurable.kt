@@ -18,17 +18,28 @@ class AppSettingsConfigurable : Configurable {
     }
 
     override fun isModified(): Boolean {
-        var modified = mySettingsComponent!!.inputPathText != AppSettingsState.inputPath
-        modified = modified or (mySettingsComponent!!.inputPathText != AppSettingsState.inputPath)
-        return modified
+        var modifiedInputPath = mySettingsComponent!!.inputPathText != AppSettingsState.inputPath
+        modifiedInputPath = modifiedInputPath or (mySettingsComponent!!.inputPathText != AppSettingsState.inputPath)
+
+        var modifiedSelectedModel = mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand
+        modifiedSelectedModel = modifiedSelectedModel or (mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand)
+
+        var modifiedNPMScriptsText = mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText
+        modifiedNPMScriptsText = modifiedNPMScriptsText or (mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText)
+
+        return modifiedInputPath || modifiedSelectedModel || modifiedNPMScriptsText
     }
 
     override fun apply() {
         AppSettingsState.inputPath = mySettingsComponent!!.inputPathText
+        AppSettingsState.selectedCommand = mySettingsComponent!!.selectedCommand
+        AppSettingsState.npmScriptsText = mySettingsComponent!!.npmScriptsText
     }
 
     override fun reset() {
         mySettingsComponent!!.inputPathText = AppSettingsState.inputPath
+        mySettingsComponent!!.selectedCommand = AppSettingsState.selectedCommand
+        mySettingsComponent!!.npmScriptsText = AppSettingsState.npmScriptsText
     }
 
     override fun disposeUIResources() {

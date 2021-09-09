@@ -8,6 +8,8 @@ import com.intellij.util.xmlb.XmlSerializerUtil
 @State(name = "no.eirikb.avatest.settings.AppSettingsState", storages = [Storage("SdkSettingsPlugin.xml")])
 object AppSettingsState : PersistentStateComponent<AppSettingsState?> {
     var inputPath = "node_modules/ava/cli.js"
+    var selectedCommand = true
+    var npmScriptsText = ""
 
     override fun getState(): AppSettingsState {
         return this
