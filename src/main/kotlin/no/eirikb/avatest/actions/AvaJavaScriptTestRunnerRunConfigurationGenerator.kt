@@ -6,6 +6,10 @@ import com.intellij.execution.RunnerAndConfigurationSettings
 import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.executors.DefaultRunExecutor
 import com.intellij.execution.runners.ExecutionUtil
+import com.intellij.lang.javascript.buildTools.npm.PackageJsonUtil
+import com.intellij.lang.javascript.buildTools.npm.rc.NpmConfigurationType
+import com.intellij.lang.javascript.buildTools.npm.rc.NpmRunConfiguration
+import com.intellij.lang.javascript.buildTools.npm.rc.NpmRunSettings
 import com.intellij.lang.javascript.psi.JSCallExpression
 import com.intellij.lang.javascript.psi.JSExpression
 import com.intellij.lang.javascript.psi.JSLiteralExpression
@@ -17,6 +21,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.fileEditor.FileDocumentManager
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.wm.ToolWindowId
 import com.intellij.psi.PsiElement
 import com.jetbrains.nodejs.run.NodeJsRunConfiguration
@@ -32,6 +38,22 @@ fun JSCallExpression.isTest(): Boolean {
     }
 
     return false
+}
+
+fun getConfigurationName(fileName: String, testName: String?): String {
+    return if (testName != null) {
+        "ava $fileName $testName"
+    } else {
+        "ava $fileName"
+    }
+}
+
+fun getRunArguments(relPath: String, testName: String?): String {
+    return if (testName != null) {
+        "-m \"$testName\" -v $relPath"
+    } else {
+        "-v $relPath"
+    }
 }
 
 class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
@@ -58,30 +80,16 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             val fileName = Paths.get(filePath).fileName.toString()
             val basePath = project.basePath
             val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length + 1)
-            val node: NodeJsRunConfiguration? =
-                NodeJsRunConfiguration.getDefaultRunConfiguration(project)?.clone() as NodeJsRunConfiguration?
-            if (node == null) {
-                writeError("NodeJS run configuration type not found")
-                return
-            }
-            val factory: ConfigurationFactory? = node.factory
-            if (factory == null) {
-                writeError("Factory not found")
-                return
-            }
-            node.workingDirectory = basePath
-            node.inputPath = AppSettingsState.inputPath
-            if (testName != null) {
-                node.name = "ava $fileName $testName"
-                node.applicationParameters = "-m \"$testName\" -v $relPath"
+
+            val configuration = if (AppSettingsState.selectedCommand) {
+                this.createNodeJsRunConfiguration(project, fileName, relPath, testName)
             } else {
-                node.name = "ava $fileName"
-                node.applicationParameters = "-v $relPath"
+                this.createNPMRunConfiguration(project, currentFile, fileName, relPath, testName)
             }
-            val runManager = RunManager.getInstance(project)
-            val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration(node, factory)
-            runManager.addConfiguration(configuration)
-            runManager.selectedConfiguration = configuration
+
+            if (configuration == null) {
+                return
+            }
 
             if (debug) {
                 val executor = ExecutorRegistry.getInstance().getExecutorById(ToolWindowId.DEBUG)
@@ -124,6 +132,70 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
                 }
             }
             return getTestName(element.parent)
+        }
+
+        private fun createNodeJsRunConfiguration(
+            project: Project,
+            fileName: String,
+            relPath: String,
+            testName: String?,
+        ): RunnerAndConfigurationSettings? {
+            val node: NodeJsRunConfiguration? =
+                NodeJsRunConfiguration.getDefaultRunConfiguration(project)?.clone() as NodeJsRunConfiguration?
+            if (node == null) {
+                writeError("NodeJS run configuration type not found")
+                return null
+            }
+            val factory: ConfigurationFactory? = node.factory
+            if (factory == null) {
+                writeError("Factory not found")
+                return null
+            }
+            node.workingDirectory = project.basePath
+            node.inputPath = AppSettingsState.inputPath
+            node.name = getConfigurationName(fileName, testName)
+            node.applicationParameters = getRunArguments(relPath, testName)
+
+            val runManager = RunManager.getInstance(project)
+            val configuration: RunnerAndConfigurationSettings = runManager.createConfiguration(node, factory)
+            runManager.addConfiguration(configuration)
+            runManager.selectedConfiguration = configuration
+
+            return configuration
+        }
+
+        private fun createNPMRunConfiguration(
+            project: Project,
+            currentFile: VirtualFile,
+            fileName: String,
+            relPath: String,
+            testName: String?,
+        ): RunnerAndConfigurationSettings? {
+            val npmRunSettingsBuilder = NpmRunSettings.builder()
+            val packageJsonPath = PackageJsonUtil.findUpPackageJson(currentFile)?.path
+
+            if (packageJsonPath == null) {
+                return null
+            }
+
+            npmRunSettingsBuilder.setPackageJsonPath(packageJsonPath)
+
+            npmRunSettingsBuilder.setArguments(getRunArguments(relPath, testName))
+            npmRunSettingsBuilder.setScriptNames(listOf(AppSettingsState.npmScriptsText))
+
+            val npmRunConfiguration = NpmRunConfiguration(
+                project,
+                NpmConfigurationType.getInstance(),
+                getConfigurationName(fileName, testName)
+            )
+            npmRunConfiguration.runSettings = npmRunSettingsBuilder.build()
+
+            val runManager = RunManager.getInstance(project)
+            val configuration = runManager.createConfiguration(npmRunConfiguration, NpmConfigurationType.getInstance())
+            runManager.addConfiguration(configuration)
+            runManager.selectedConfiguration = configuration
+
+            return configuration
         }
     }
 

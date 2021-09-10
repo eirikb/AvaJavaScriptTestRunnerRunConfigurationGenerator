@@ -19,6 +19,11 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
 }
 
+ktlint {
+    // See https://github.com/pinterest/ktlint/issues/527
+    disabledRules.add("import-ordering")
+}
+
 group = properties("pluginGroup")
 version = properties("pluginVersion")
 
