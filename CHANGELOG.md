@@ -3,6 +3,7 @@
 # AVA Test Run Configuration Generator Changelog
 
 ## [Unreleased]
+## [1.5.0]
 ## [1.4.1]
 ## [1.4.0]
 ## [1.3.9]
