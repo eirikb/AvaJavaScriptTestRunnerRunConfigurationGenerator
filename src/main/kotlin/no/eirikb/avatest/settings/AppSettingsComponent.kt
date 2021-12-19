@@ -14,7 +14,7 @@ const val MARGIN_BOTTOM = 8
 class AppSettingsComponent {
     val panel: JPanel
     val myInputPathText = JBTextField()
-    var inputPathText: String
+    var inputPathText: String?
         get() = myInputPathText.text
         set(newText) {
             myInputPathText.text = newText

@@ -22,6 +22,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.wm.ToolWindowId
 import com.intellij.psi.PsiElement
@@ -153,6 +154,14 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             }
             node.workingDirectory = project.basePath
             node.inputPath = AppSettingsState.inputPath
+            if (node.inputPath == null) {
+                val projectDir = project.guessProjectDir()
+                node.inputPath = listOf(
+                    "node_modules/ava/cli.js",
+                    "node_modules/.bin/ava.cmd",
+                    "node_modules/.bin/ava"
+                ).find { projectDir?.findFileByRelativePath(it) != null }
+            }
             node.name = getConfigurationName(fileName, testName)
             node.applicationParameters = getRunArguments(relPath, testName)
 
