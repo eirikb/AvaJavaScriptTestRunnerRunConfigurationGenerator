@@ -157,10 +157,9 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             if (node.inputPath == null) {
                 val projectDir = project.guessProjectDir()
                 node.inputPath = listOf(
-                    "node_modules/ava/cli.js",
-                    "node_modules/.bin/ava.cmd",
-                    "node_modules/.bin/ava"
-                ).find { projectDir?.findFileByRelativePath(it) != null }
+                    "node_modules/ava/entrypoints/cli.mjs",
+                    "node_modules/ava/cli.js"
+                ).find { projectDir?.findFileByRelativePath(it)?.exists() == true }
             }
             node.name = getConfigurationName(fileName, testName)
             node.applicationParameters = getRunArguments(relPath, testName)
