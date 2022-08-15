@@ -82,7 +82,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             val basePath = project.basePath
             val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length + 1)
 
-            val configuration = if (AppSettingsState.selectedCommand) {
+            val configuration = if (AppSettingsState.instance.selectedCommand) {
                 this.createNodeJsRunConfiguration(project, fileName, relPath, testName)
             } else {
                 this.createNPMRunConfiguration(project, currentFile, fileName, relPath, testName)
@@ -153,7 +153,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
                 return null
             }
             node.workingDirectory = project.basePath
-            node.inputPath = AppSettingsState.inputPath
+            node.inputPath = AppSettingsState.instance.inputPath
             if (node.inputPath == null) {
                 val projectDir = project.guessProjectDir()
                 node.inputPath = listOf(
@@ -189,7 +189,7 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             npmRunSettingsBuilder.setPackageJsonPath(packageJsonPath)
 
             npmRunSettingsBuilder.setArguments(getRunArguments(relPath, testName))
-            npmRunSettingsBuilder.setScriptNames(listOf(AppSettingsState.npmScriptsText))
+            npmRunSettingsBuilder.setScriptNames(listOf(AppSettingsState.instance.npmScriptsText))
 
             val npmRunConfiguration = NpmRunConfiguration(
                 project,

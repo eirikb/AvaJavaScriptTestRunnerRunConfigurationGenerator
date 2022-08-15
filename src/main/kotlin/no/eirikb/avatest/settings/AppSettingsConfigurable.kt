@@ -6,6 +6,7 @@ import javax.swing.JComponent
 
 class AppSettingsConfigurable : Configurable {
     private var mySettingsComponent: AppSettingsComponent? = null
+    private val settings = AppSettingsState.instance
 
     override fun getDisplayName(): @Nls(capitalization = Nls.Capitalization.Title) String =
         "AVA Test Runner Run Configuration Generator"
@@ -18,30 +19,31 @@ class AppSettingsConfigurable : Configurable {
     }
 
     override fun isModified(): Boolean {
-        var modifiedInputPath = mySettingsComponent!!.inputPathText != AppSettingsState.inputPath
-        modifiedInputPath = modifiedInputPath or (mySettingsComponent!!.inputPathText != AppSettingsState.inputPath)
+        var modifiedInputPath = mySettingsComponent!!.inputPathText != settings.inputPath
+        modifiedInputPath =
+            modifiedInputPath or (mySettingsComponent!!.inputPathText != settings.inputPath)
 
-        var modifiedSelectedModel = mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand
+        var modifiedSelectedModel = mySettingsComponent!!.selectedCommand != settings.selectedCommand
         modifiedSelectedModel =
-            modifiedSelectedModel or (mySettingsComponent!!.selectedCommand != AppSettingsState.selectedCommand)
+            modifiedSelectedModel or (mySettingsComponent!!.selectedCommand != settings.selectedCommand)
 
-        var modifiedNPMScriptsText = mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText
+        var modifiedNPMScriptsText = mySettingsComponent!!.npmScriptsText != settings.npmScriptsText
         modifiedNPMScriptsText =
-            modifiedNPMScriptsText or (mySettingsComponent!!.npmScriptsText != AppSettingsState.npmScriptsText)
+            modifiedNPMScriptsText or (mySettingsComponent!!.npmScriptsText != settings.npmScriptsText)
 
         return modifiedInputPath || modifiedSelectedModel || modifiedNPMScriptsText
     }
 
     override fun apply() {
-        AppSettingsState.inputPath = mySettingsComponent!!.inputPathText
-        AppSettingsState.selectedCommand = mySettingsComponent!!.selectedCommand
-        AppSettingsState.npmScriptsText = mySettingsComponent!!.npmScriptsText
+        settings.inputPath = mySettingsComponent!!.inputPathText
+        settings.selectedCommand = mySettingsComponent!!.selectedCommand
+        settings.npmScriptsText = mySettingsComponent!!.npmScriptsText
     }
 
     override fun reset() {
-        mySettingsComponent!!.inputPathText = AppSettingsState.inputPath
-        mySettingsComponent!!.selectedCommand = AppSettingsState.selectedCommand
-        mySettingsComponent!!.npmScriptsText = AppSettingsState.npmScriptsText
+        mySettingsComponent!!.inputPathText = settings.inputPath
+        mySettingsComponent!!.selectedCommand = settings.selectedCommand
+        mySettingsComponent!!.npmScriptsText = settings.npmScriptsText ?: ""
     }
 
     override fun disposeUIResources() {
