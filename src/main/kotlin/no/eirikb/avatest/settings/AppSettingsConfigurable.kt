@@ -20,8 +20,7 @@ class AppSettingsConfigurable : Configurable {
 
     override fun isModified(): Boolean {
         var modifiedInputPath = mySettingsComponent!!.inputPathText != settings.inputPath
-        modifiedInputPath =
-            modifiedInputPath or (mySettingsComponent!!.inputPathText != settings.inputPath)
+        modifiedInputPath = modifiedInputPath or (mySettingsComponent!!.inputPathText != settings.inputPath)
 
         var modifiedSelectedModel = mySettingsComponent!!.selectedCommand != settings.selectedCommand
         modifiedSelectedModel =

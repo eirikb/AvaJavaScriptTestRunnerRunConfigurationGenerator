@@ -1,9 +1,9 @@
 package no.eirikb.avatest.settings
 
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBRadioButton
 import com.intellij.ui.components.JBTextField
-import com.intellij.ui.components.JBLabel
 import com.intellij.util.ui.FormBuilder
 import javax.swing.ButtonGroup
 import javax.swing.JPanel
