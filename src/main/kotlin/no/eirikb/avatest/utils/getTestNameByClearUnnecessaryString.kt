@@ -12,7 +12,7 @@ fun getTestNameByClearUnnecessaryString(expression: JSLiteralExpression): String
     val testName = expression.stringValue
 
     if (testName != null) {
-        return testName
+        return testName.trim().replace("  +".toRegex(), " ")
     }
 
     val paramSourceCode = expression.text
