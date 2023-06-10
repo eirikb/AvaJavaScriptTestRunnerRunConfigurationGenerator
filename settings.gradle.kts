@@ -1,1 +1,1 @@
-rootProject.name = "AvaJavaScriptTestRunnerRunConfigurationGenerator"
+rootProject.name = "intellislit"
