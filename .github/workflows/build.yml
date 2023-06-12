@@ -75,6 +75,11 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
           ./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
+          echo "bah!"
+          cat build/listProductsReleases.txt
+          head -n 1 build/listProductsReleases.txt > bah.txt
+          cat bah.txt
+          cp bah.txt build/listProductsReleases.txt
 
       # Run tests
       - name: Run Tests
@@ -114,8 +119,8 @@ jobs:
           path: ${{ github.workspace }}/build/reports/pluginVerifier
 
       # Run Qodana inspections
-#      - name: Qodana - Code Inspection
-#        uses: JetBrains/qodana-action@v2023.1.0
+      - name: Qodana - Code Inspection
+        uses: JetBrains/qodana-action@v2023.1.0
 
       # Prepare plugin archive content for creating artifact
       - name: Prepare Plugin Artifact
