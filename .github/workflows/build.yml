@@ -123,6 +123,8 @@ jobs:
         shell: bash
         run: |
           cd ${{ github.workspace }}/build/distributions
+          du -a
+          ls -lah
           FILENAME=`ls *.zip`
           unzip "$FILENAME" -d content
 
