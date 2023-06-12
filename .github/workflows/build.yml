@@ -120,6 +120,7 @@ jobs:
       # Prepare plugin archive content for creating artifact
       - name: Prepare Plugin Artifact
         id: artifact
+        if: false
         shell: bash
         run: |
           cd ${{ github.workspace }}/build/distributions
