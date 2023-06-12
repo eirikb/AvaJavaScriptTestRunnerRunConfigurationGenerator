@@ -76,7 +76,6 @@ jobs:
 
           #./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
           echo "bah 2!"
-          rm build/listProductsReleases.txt
           touch build/listProductsReleases.txt
 
       # Run tests
