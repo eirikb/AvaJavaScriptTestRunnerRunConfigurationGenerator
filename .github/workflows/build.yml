@@ -74,7 +74,7 @@ jobs:
           echo "$CHANGELOG" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-          ./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
+          #./gradlew listProductsReleases # prepare list of IDEs for Plugin Verifier
           echo "bah 2!"
           rm build/listProductsReleases.txt
           touch build/listProductsReleases.txt
