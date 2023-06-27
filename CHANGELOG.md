@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+## 1.12.0 - 2023-06-16
+- Changelog update - `v1.11.0` by @github-actions in https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/107
+- 108 plugin doesnt properly support tests with trailing spaces by @eirikb in https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/109
+- Bump verifyIdeVersions and platformVersion by @eirikb in https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/110
+- Version bump by @eirikb in https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/111
+
 ## 1.11.0 - 2023-04-13
 2023 support (I hope)
 
