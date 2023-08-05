@@ -116,7 +116,6 @@ jobs:
       # Run Qodana inspections
       - name: Qodana - Code Inspection
         uses: JetBrains/qodana-action@v2023.1.0
-        if: false
 
       # Prepare plugin archive content for creating artifact
       - name: Prepare Plugin Artifact
