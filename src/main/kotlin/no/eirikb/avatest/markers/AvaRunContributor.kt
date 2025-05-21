@@ -6,6 +6,7 @@ import com.intellij.icons.AllIcons.RunConfigurations.TestState
 import com.intellij.lang.javascript.psi.JSCallExpression
 import com.intellij.lang.javascript.psi.JSExpression
 import com.intellij.lang.javascript.psi.JSLiteralExpression
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.psi.PsiElement
@@ -56,4 +57,8 @@ class AvaRunContributor : RunLineMarkerContributor() {
 }
 
 abstract class RunAction(prefix: String, testName: String, icon: Icon) :
-    AnAction("$prefix '$testName'", "$prefix '$testName'", icon)
+    AnAction("$prefix '$testName'", "$prefix '$testName'", icon) {
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
+    }
+}
