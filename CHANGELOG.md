@@ -4,6 +4,12 @@
 
 ## Unreleased
 
+## 1.18.0 - 2024-05-21
+- Updated plugin compatibility for IntelliJ 2025.1
+
+## 1.17.0
+- Support for IntelliJ 2024.1
+
 ## 1.12.0 - 2023-06-16
 - Changelog update - `v1.11.0` by @github-actions in https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/107
 - 108 plugin doesnt properly support tests with trailing spaces by @eirikb in https://github.com/eirikb/AvaJavaScriptTestRunnerRunConfigurationGenerator/pull/109

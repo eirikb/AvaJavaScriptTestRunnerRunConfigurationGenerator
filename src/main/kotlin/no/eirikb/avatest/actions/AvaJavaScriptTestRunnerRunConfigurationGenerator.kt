@@ -16,6 +16,7 @@ import com.intellij.lang.javascript.psi.JSLiteralExpression
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationType
 import com.intellij.notification.Notifications
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -58,6 +59,9 @@ fun getRunArguments(relPath: String, testName: String?): String {
 }
 
 class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
+    override fun getActionUpdateThread(): ActionUpdateThread {
+        return ActionUpdateThread.BGT
+    }
     companion object {
         fun performAction(e: AnActionEvent, debug: Boolean = false, offset: Int? = null) {
             val project = e.project
