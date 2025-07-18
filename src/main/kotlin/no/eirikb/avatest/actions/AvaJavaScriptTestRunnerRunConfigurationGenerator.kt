@@ -84,7 +84,11 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
             val filePath = currentFile.path
             val fileName = Paths.get(filePath).fileName.toString()
             val basePath = project.basePath
-            val relPath = if (basePath == null) fileName else currentFile.path.substring(basePath.length + 1)
+            val relPath = if (basePath == null || !filePath.startsWith(basePath)) {
+                filePath
+            } else {
+                filePath.substring(basePath.length + 1)
+            }
 
             val configuration = if (AppSettingsState.instance.selectedCommand) {
                 this.createNodeJsRunConfiguration(project, fileName, relPath, testName)
