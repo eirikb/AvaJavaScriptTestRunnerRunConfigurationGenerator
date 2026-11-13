@@ -53,7 +53,6 @@ kover {
 
 intellijPlatform {
     pluginConfiguration {
-        name = properties("pluginName")
         version = properties("pluginVersion")
 
         description = providers.fileContents(layout.projectDirectory.file("README.md")).asText.map {
@@ -82,7 +81,8 @@ intellijPlatform {
 
         ideaVersion {
             sinceBuild = properties("pluginSinceBuild")
-            untilBuild = properties("pluginUntilBuild")
+            // No upper bound: keep the plugin installable on future IDE releases
+            untilBuild = provider { null }
         }
     }
 
