@@ -3,6 +3,8 @@
 # AVA Test Run Configuration Generator Changelog
 
 ## Unreleased
+- No upper IDE version bound, so the plugin stays installable on new IDE releases. I no longer use IntelliJ myself, but I'll keep the plugin available.
+- Requires IDE 2025.3 or newer (older IDEs keep 1.21.0)
 
 ## 1.18.0 - 2024-05-21
 - Updated plugin compatibility for IntelliJ 2025.1

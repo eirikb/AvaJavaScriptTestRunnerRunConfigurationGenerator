@@ -69,7 +69,11 @@ class AvaJavaScriptTestRunnerRunConfigurationGenerator : AnAction() {
                 writeError("Project not found")
                 return
             }
-            val editor = e.getRequiredData(CommonDataKeys.EDITOR)
+            val editor = e.getData(CommonDataKeys.EDITOR)
+            if (editor == null) {
+                writeError("Editor not found")
+                return
+            }
             val currentFile = FileDocumentManager.getInstance().getFile(editor.document)
             if (currentFile == null) {
                 writeError("Current file not found")

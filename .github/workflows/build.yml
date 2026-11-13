@@ -18,6 +18,10 @@ on:
     branches: [main]
   # Trigger the workflow on any pull request
   pull_request:
+  # Monthly run so the Plugin Verifier catches new IDE releases breaking the plugin
+  schedule:
+    - cron: '0 6 1 * *'
+  workflow_dispatch:
 
 jobs:
 
@@ -124,7 +128,7 @@ jobs:
   # If accepted and published, release workflow would be triggered
   releaseDraft:
     name: Release Draft
-    if: github.event_name != 'pull_request'
+    if: github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     permissions:
